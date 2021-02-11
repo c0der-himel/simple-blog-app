@@ -3,58 +3,12 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
 
+const routes = require('./routes/api');
+
 const app = express();
 
-// Schema & Model
-const Schema = mongoose.Schema;
-const BlogPostSchema = new Schema({
-  title: String,
-  body: String,
-  date: {
-    type: String,
-    default: Date.now(),
-  },
-});
-const BlogPost = mongoose.model('post', BlogPostSchema);
-
-// saving data
-const data = {
-  title: 'Hello, World',
-  body: 'Hello, World. What is happening ?',
-};
-
-const newPost = new BlogPost(data);
-
-// newPost.save((err) => {
-//   if (err) {
-//     console.log('Something went wrong');
-//   } else {
-//     console.log('Data saved');
-//   }
-// });
-
-// HTTP request logger
+app.use('/api', routes);
 app.use(morgan('dev'));
-
-// routes
-app.get('/api', (req, res) => {
-  BlogPost.find()
-    .then((data) => {
-      console.log(data);
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-app.get('/api/name', (req, res) => {
-  const data = {
-    username: 'dom',
-    age: 50,
-  };
-  res.json(data);
-});
 
 const username = 'mern-blog-admin';
 const password = 'admin123';
