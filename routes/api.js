@@ -15,6 +15,23 @@ router.get('/', (req, res) => {
     });
 });
 
+router.post('/save', (req, res) => {
+  const { title, body } = req.body;
+  const newPost = new BlogPost({ title, body });
+
+  newPost.save((err) => {
+    if (err) {
+      res.status(500).json({
+        message: 'Server Error',
+      });
+    } else {
+      res.json({
+        message: 'Data Saved',
+      });
+    }
+  });
+});
+
 router.get('/name', (req, res) => {
   const data = {
     username: 'dom',

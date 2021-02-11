@@ -7,8 +7,10 @@ const routes = require('./routes/api');
 
 const app = express();
 
-app.use('/api', routes);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+app.use('/api', routes);
 
 const username = 'mern-blog-admin';
 const password = 'admin123';
